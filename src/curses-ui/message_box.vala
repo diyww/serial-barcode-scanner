@@ -22,6 +22,7 @@ public class MessageBox {
 	DateTime last;
 
 	private Config cfg;
+	private bool privacyMode = true;
 
 	public const short INFO_COLOR = 5;
 	public const short WARN_COLOR = 6;
@@ -45,6 +46,8 @@ public class MessageBox {
 		init_pair (INFO_COLOR, Color.WHITE, Color.BLACK);
 		init_pair (WARN_COLOR, Color.YELLOW, Color.BLACK);
 		init_pair (ERROR_COLOR, Color.RED, Color.BLACK);
+		
+		Timeout.add_seconds(10, addBlank);
 		
 		Timeout.add_seconds(10, addBlank);
 
@@ -80,8 +83,15 @@ public class MessageBox {
 	}
 	
 	public bool addBlank(){
-               subwin.addstr("\n");
-               subwin.refresh();
-               return true;
-       }
+                if(this.privacyMode) {
+                        subwin.addstr("\n");
+                        subwin.refresh();
+                }
+                return true;
+        }
+
+        public void setPrivacyMode(bool mode){
+                this.privacyMode = mode;        
+        }
+	
 }
