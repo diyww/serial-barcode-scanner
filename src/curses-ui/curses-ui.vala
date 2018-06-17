@@ -84,7 +84,7 @@ public class CursesUI {
 
 	}
 	
-	public void addMessage(string message, short color_pair = MessageBox.INFO_COLOR){
+	public void addPlainMessage(string message, short color_pair = MessageBox.INFO_COLOR){
 		messages.addPlain(message, color_pair);
 	}
 
