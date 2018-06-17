@@ -83,6 +83,10 @@ public class CursesUI {
 		}
 
 	}
+	
+	public void addMessage(string message, short color_pair = MessageBox.INFO_COLOR){
+		messages.addPlain(message, color_pair);
+	}
 
 	public void log_overlay(string title, string message, int closeAfter) {
 		mbOverlay = new MessageBoxOverlay(title, message, closeAfter);
