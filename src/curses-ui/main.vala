@@ -18,6 +18,7 @@
 public MainLoop loop;
 public AudioPlayer audio;
 public ScannerSession scanner;
+public Screensaver screensaver;
 public CursesUI ui;
 public Config config;
 
@@ -31,6 +32,10 @@ private static void play(string file) {
 
 public void msg_handler(MessageType type, string message) {
 	ui.log(type, message);
+}
+
+public void msg_plain_handler(MessageType type,string message) {
+	ui.addPlainMessage(type, message);
 }
 
 public void msg_overlay_handler(string title, string message) {
@@ -56,6 +61,8 @@ public static int main(string[] args) {
 		audio = Bus.get_proxy_sync(BusType.SYSTEM, "io.mainframe.shopsystem.AudioPlayer", "/io/mainframe/shopsystem/audio");
 		scanner = Bus.get_proxy_sync(BusType.SYSTEM, "io.mainframe.shopsystem.ScannerSession", "/io/mainframe/shopsystem/scanner_session");
 		config = Bus.get_proxy_sync(BusType.SYSTEM, "io.mainframe.shopsystem.Config", "/io/mainframe/shopsystem/config");
+		screensaver = Bus.get_proxy_sync(BusType.SYSTEM, "io.mainframe.shopsystem.Screensaver", "/io/mainframe/shopsystem/screensaver");
+		
 	} catch(IOError e) {
 		error("IOError: %s\n", e.message);
 	}
@@ -69,18 +76,20 @@ public static int main(string[] args) {
 	scanner.msg.connect(msg_handler);
 	scanner.msg_overlay.connect(msg_overlay_handler);
 	scanner.set_privacy_mode.connect(privacy_handler);
+	
+	screensaver.msg_plain.connect(msg_plain_handler);
 
-  /* get configuration */
-  var shopname = config.get_string("GENERAL", "longname");
+  	/* get configuration */
+ 	var shopname = config.get_string("GENERAL", "longname");
 
 	ui.log(MessageType.INFO, @"$shopname Shop System has been started");
-	play("startup.ogg");
+	this.play("startup.ogg");
 
 	/* run mainloop */
 	loop.run();
 
 	ui.log(MessageType.INFO, "Stopping Shop System");
-	play("shutdown.ogg");
+	this.play("shutdown.ogg");
 
 	/* leave curses mode */
 	ui.exit();
