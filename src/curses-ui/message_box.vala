@@ -70,8 +70,12 @@ public class MessageBox {
 		last = now;
 
 		string curtime = now.format(cfg.get_string("DATE-FORMAT", "formatCursesUi"));
+		this.addPlain([" + curtime + "] " + msg, color_pair);
+	}
+	
+	public void addPlain(string msg, short color_pair = MessageBox.INFO_COLOR) {
 		subwin.bkgdset(COLOR_PAIR(color_pair));
-		subwin.addstr("\n[" + curtime + "] " + msg);
+		subwin.addstr("\n" + msg);
 		subwin.refresh();
 	}
 
