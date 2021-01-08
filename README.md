@@ -36,19 +36,20 @@ The system consists of multiple daemons written in Vala, which communicate
 with each other using DBus.
 
 Build Dependencies:
- * apt install build-essential valac libesmtp-dev libgpgme11-dev libncursesw5-dev libncurses5-dev libgee-0.8-dev libgmime-2.6-dev libarchive-dev libgstreamer1.0-dev libgtk2.0-dev librsvg2-dev libsoup2.4-dev libsqlite3-dev libpango1.0-dev libssl-dev dbus-x11 mdbus2 policykit-1 git fonts-lmodern sqlite3
+ * apt install build-essential valac libesmtp-dev libgpgme11-dev libncursesw5-dev libncurses5-dev libgee-0.8-dev libgmime-2.6-dev libarchive-dev libgstreamer1.0-dev libgtk2.0-dev librsvg2-dev libsoup2.4-dev libsqlite3-dev libpango1.0-dev libssl-dev dbus-x11 qdbus policykit-1 git fonts-lmodern sqlite3
 
 Additional runtime dependencies:
- * apt install gstreamer1.0-alsa gstreamer1.0-plugins-base vbetool mosquitto-clients
+ * apt install gstreamer1.0-alsa gstreamer1.0-plugins-base vbetool mosquitto-clients jq wget
 
 ## Installation
 
-You can install to different location or use a different username,
-but you need to modify a few things.
+ * This manual has been testet on Debian 10 without any GUI
+ * You can install to different location or use a different username, but you need to modify a few things.
 
 ### Git Setup
 
  * adduser "shop" with homedir in /home/shop
+ * login as user "shop"
  * clone git repository into /home/shop/serial-barcode-scanner
 
 ### Build the Software
@@ -71,7 +72,7 @@ but you need to modify a few things.
 
 ### Configuration 
 
- * mv example.cfg config.cfg
+ * cp example.cfg config.cfg
  * edit config.cfg
 
 ### Database
@@ -93,9 +94,11 @@ but you need to modify a few things.
  
 =======
 ### Display on / off via MQTT
-You can turn your Display on an off via MQTT
-configure the MQTT-Settings in your config-file
-Yout can define custom massages for display on an display off, set your BROKER and your TOPIC
+You can turn your Display on an off via MQTT or Space-API
+configure the Settings in your config-file
+You can define custom MQTT-messages for display on an display off, set your BROKER and your TOPIC
+For Space-API you only need zu set the URL and the polling rate.
+You will find these Setting in chapter [DISPLAY], [MQTT] and [SPACEAPI] of the config-file
 
 ## Customize Your Shop
 
